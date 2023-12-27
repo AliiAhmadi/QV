@@ -51,4 +51,57 @@ const (
 	BOOLEAN           = "BOOLEAN"
 	DATE              = "DATE"
 	DATETIME          = "DATETIME"
+	DEFAULT           = "DEFAULT"
+	TRUE              = "TRUE"
+	FALSE             = "FALSE"
+	NAME              = "NAME"
+	NUMBER            = "NUMBER"
 )
+
+var keywords map[string]Type = map[string]Type{
+	"CREATE":            CREATE,
+	"TABLE":             TABLE,
+	"IF NOT EXISTS":     INE,
+	"NULL":              NULL,
+	"NOT":               NOT,
+	"UNIQUE":            UNIQUE,
+	"PRIMARY KEY":       PK,
+	"INT":               INT,
+	"INTEGER":           INTEGER,
+	"TINYINT":           TINYINT,
+	"SMALLINT":          SMALLINT,
+	"MEDIUMINT":         MEDIUMINT,
+	"BIGINT":            BIGINT,
+	"UNSIGNED BIG INT":  UNSIGNED_BIG_INT,
+	"INT2":              INT2,
+	"INT8":              INT8,
+	"CHARACTER":         CHARACTER,
+	"VARCHAR":           VARCHAR,
+	"VARYING CHARACTER": VARYING_CHARACTER,
+	"NCHAR":             NCHAR,
+	"NATIVE CHARACTER":  NATIVE_CHARACTER,
+	"NVARCHAR":          NVARCHAR,
+	"TEXT":              TEXT,
+	"CLOB":              CLOB,
+	"BLOB":              BLOB,
+	"REAL":              REAL,
+	"DOUBLE":            DOUBLE,
+	"DOUBLE PRECISION":  DOUBLE_PRECISION,
+	"FLOAT":             FLOAT,
+	"NUMERIC":           NUMERIC,
+	"DECIMAL":           DECIMAL,
+	"BOOLEAN":           BOOLEAN,
+	"DATE":              DATE,
+	"DATETIME":          DATETIME,
+	"DEFAULT":           DEFAULT,
+	"TRUE":              TRUE,
+	"FALSE":             FALSE,
+}
+
+func Lookup(val string) Type {
+	if token, ok := keywords[val]; ok {
+		return token
+	}
+
+	return NAME
+}
