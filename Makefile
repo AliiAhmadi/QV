@@ -12,3 +12,25 @@ help:
 .PHONY: run
 run:
 	@go run .
+
+## audit: tidy dependencies and format, vet and test all code
+.PHONY: audit
+audit: fmt vet test
+
+## fmt: formatting codes
+.PHONY: fmt
+fmt:
+	@echo "formatting..."
+	@go fmt ./...
+
+## vet: vetting codes
+.PHONY: vet
+vet:
+	@echo "vetting..."
+	@go vet ./...
+
+## test: run all tests
+.PHONY: test
+test:
+	@echo "running tests..."
+	@go test -race -vet=off ./...
