@@ -56,6 +56,10 @@ const (
 	FALSE             = "FALSE"
 	NAME              = "NAME"
 	NUMBER            = "NUMBER"
+	EOQ               = "EOQ"
+	ILLEGAL           = "ILLEGAL"
+	STRING            = "\""
+	BYTE              = "'"
 )
 
 var keywords map[string]Type = map[string]Type{

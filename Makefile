@@ -38,10 +38,15 @@ test:
 linker_falg = "-s"
 
 ## build: build the cmd/api application
-.PHONY:
+.PHONY: build
 build:
 	@echo "building QV..."
 	GOOS=windows GOARCH=amd64 go build -a -ldflags=${linker_flag} -o=./bin/windows_amd64/QV .
 	GOOS=linux GOARCH=amd64 go build -a -ldflags=${linker_flag} -o=./bin/linux_amd64/QV .
 	GOOS=linux GOARCH=mips64 go build -a -ldflags=${linker_flag} -o=./bin/linux_mips64/QV .
 	GOOS=linux GOARCH=arm64 go build -a -ldflags=${linker_flag} -o=./bin/linux_arm64/QV .
+
+## clear: clear cache for tests
+.PHONY: clear
+clear:
+	@go clean -testcache
