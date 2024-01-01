@@ -5,6 +5,9 @@ package token
 // string.
 type Type string
 
+type DataType string
+type MetaData string
+
 // Define token struct with two value.
 // type & literal
 type Token struct {

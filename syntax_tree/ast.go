@@ -23,17 +23,24 @@ func (query *Query) TokenLiteral() string {
 	}
 }
 
-type CreateQuery struct {
-	Token token.Token
+type Column struct {
+	Token token.Token // NAME
 	Name  *Identifier
-	Value Command
+	Type  token.Type
+}
+
+type CreateQuery struct {
+	Token   token.Token // CREATE
+	Name    *Identifier
+	Value   Command
+	Columns []Column
 }
 
 func (createQuery *CreateQuery) commandNode()         {}
 func (createQuery *CreateQuery) TokenLiteral() string { return createQuery.Token.Literal }
 
 type Identifier struct {
-	Token token.Token
+	Token token.Token // NAME
 	Value string
 }
 
