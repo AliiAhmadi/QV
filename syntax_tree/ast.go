@@ -6,43 +6,29 @@ type Node interface {
 	TokenLiteral() string
 }
 
-type Command interface {
-	Node
-	commandNode()
-}
-
-type Query struct {
-	Command Command
-}
-
-func (query *Query) TokenLiteral() string {
-	if query.Command != nil {
-		return query.Command.TokenLiteral()
-	} else {
-		return ""
-	}
-}
-
-type Column struct {
-	Token token.Token // NAME
-	Name  *Identifier
-	Type  token.Type
+type Program struct {
+	Query CreateQuery
 }
 
 type CreateQuery struct {
-	Token   token.Token // CREATE
+	Token   token.Token
 	Name    *Identifier
-	Value   Command
 	Columns []Column
 }
 
-func (createQuery *CreateQuery) commandNode()         {}
-func (createQuery *CreateQuery) TokenLiteral() string { return createQuery.Token.Literal }
-
 type Identifier struct {
-	Token token.Token // NAME
+	Token token.Token
 	Value string
 }
 
-func (identifier *Identifier) commandNode()         {}
-func (identifier *Identifier) TokenLiteral() string { return identifier.Token.Literal }
+type Column struct {
+	Token    token.Token
+	Name     *Identifier
+	DataType token.DataType
+	MetaData token.MetaData
+}
+
+func (program *Program) TokenLiteral() string         { return program.Query.TokenLiteral() }
+func (createQuery *CreateQuery) TokenLiteral() string { return createQuery.Token.Literal }
+func (identifier *Identifier) TokenLiteral() string   { return identifier.Token.Literal }
+func (column *Column) TokenLiteral() string           { return column.Token.Literal }
