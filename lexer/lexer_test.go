@@ -105,7 +105,7 @@ func TestCreatingTableQueries(t *testing.T) {
 			name TEXT NOT NULL UNIQUE,
 			description TEXT,
 			category TEXT
-		  );		  
+		  );	  
 		`,
 		`CREATE TABLE orders (
 			orderID INTEGER PRIMARY KEY,
