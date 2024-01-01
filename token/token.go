@@ -8,6 +8,37 @@ type Type string
 type DataType string
 type MetaData string
 
+var DataTypes map[string]DataType = map[string]DataType{
+	"INT":       INT,
+	"INTEGER":   INTEGER,
+	"TINYINT":   TINYINT,
+	"SMALLINT":  SMALLINT,
+	"MEDIUMINT": MEDIUMINT,
+	"BIGINT":    BIGINT,
+	"INT2":      INT2,
+	"INT8":      INT8,
+	"UNSIGNED":  UNSIGNED,
+	"BIG":       BIG,
+	"CHARACTER": CHARACTER,
+	"VARCHAR":   VARCHAR,
+	"VARYING":   VARYING,
+	"NCHAR":     NCHAR,
+	"NATIVE":    NATIVE,
+	"NVARCHAR":  NVARCHAR,
+	"TEXT":      TEXT,
+	"CLOB":      CLOB,
+	"BLOB":      BLOB,
+	"REAL":      REAL,
+	"DOUBLE":    DOUBLE,
+	"PRECISION": PRECISION,
+	"FLOAT":     FLOAT,
+	"NUMERIC":   NUMERIC,
+	"DECIMAL":   DECIMAL,
+	"BOOLEAN":   BOOLEAN,
+	"DATE":      DATE,
+	"DATETIME":  DATETIME,
+}
+
 // Define token struct with two value.
 // type & literal
 type Token struct {
