@@ -141,6 +141,15 @@ func TestCreatingTableQueries(t *testing.T) {
 		`
 		SELECT * FROM locations;
 		`,
+		`
+		SELECT region_name AS "Name of the Region" FROM regions;
+		`,
+		`
+		SELECT * FROM locations LIMIT 10;
+		`,
+		`
+		SELECT * FROM locations LIMIT 4,5;
+		`,
 	}
 
 	tests := [][]struct {
@@ -306,6 +315,41 @@ func TestCreatingTableQueries(t *testing.T) {
 			{"STAR", token.STAR, "*"},
 			{"FROM", token.FROM, "FROM"},
 			{"table name", token.NAME, "locations"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT region_name AS "Name of the Region" FROM regions;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "region_name"},
+			{"AS", token.AS, "AS"},
+			{"string", token.STRING, "Name of the Region"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "regions"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT * FROM locations LIMIT 10;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"STAR", token.STAR, "*"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "locations"},
+			{"LIMIT", token.LIMIT, "LIMIT"},
+			{"number 10", token.NUMBER, "10"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT * FROM locations LIMIT 4,5;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"STAR", token.STAR, "*"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "locations"},
+			{"LIMIT", token.LIMIT, "LIMIT"},
+			{"number 4", token.NUMBER, "4"},
+			{"comma", token.COMMA, ","},
+			{"number 5", token.NUMBER, "5"},
 			{"semicolon", token.SEMICOLON, ";"},
 		},
 	}
