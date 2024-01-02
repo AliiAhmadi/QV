@@ -37,7 +37,7 @@ test:
 
 linker_falg = "-s"
 
-## build: build the cmd/api application
+## build: build the application
 .PHONY: build
 build:
 	@echo "building QV..."

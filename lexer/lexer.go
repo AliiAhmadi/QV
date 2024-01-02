@@ -75,7 +75,11 @@ func isLetter(ch byte) bool {
 func (lexer *Lexer) readName() string {
 	position := lexer.position
 
-	for isLetter(lexer.ch) {
+	if isLetter(lexer.ch) {
+		lexer.readChar()
+	}
+
+	for isLetter(lexer.ch) || isDigit(lexer.ch) {
 		lexer.readChar()
 	}
 

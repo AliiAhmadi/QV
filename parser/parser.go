@@ -29,5 +29,73 @@ func (parser *Parser) nextToken() {
 }
 
 func (parser *Parser) Parse() *ast.Program {
-	return nil
+	program := &ast.Program{}
+	program.Query = ast.CreateQuery{}
+
+	for parser.currentToken.Type != token.EOQ {
+		q := parser.parseQuery()
+
+		val, ok := q.(*ast.CreateQuery)
+		if !ok {
+			return nil
+		}
+
+		if q != nil {
+			program.Query = *val
+		}
+		parser.nextToken()
+	}
+	return program
+}
+
+func (parser *Parser) parseQuery() ast.Query {
+	switch parser.currentToken.Type {
+	case token.CREATE:
+		return parser.parseCreateQuery()
+	default:
+		return nil
+	}
+}
+
+func (parser *Parser) parseCreateQuery() *ast.CreateQuery {
+	createQuery := &ast.CreateQuery{
+		Token: parser.currentToken,
+	}
+
+	if !parser.expectPeek(token.TABLE) {
+		return nil
+	}
+
+	if !parser.expectPeek(token.NAME) {
+		return nil
+	}
+
+	createQuery.Name = &ast.Identifier{
+		Token: parser.currentToken,
+		Value: parser.currentToken.Literal,
+	}
+
+	// skip to end of query for now
+	for !parser.curTokenIs(token.SEMICOLON) {
+		parser.nextToken()
+	}
+
+	return createQuery
+}
+
+func (parser *Parser) curTokenIs(tok token.Type) bool {
+	return parser.currentToken.Type == tok
+}
+
+func (parser *Parser) peekTokenIs(tok token.Type) bool {
+	return parser.peekToken.Type == tok
+}
+
+func (parser *Parser) expectPeek(tok token.Type) bool {
+	if parser.peekTokenIs(tok) {
+		parser.nextToken()
+		return true
+	} else {
+		return false
+	}
 }

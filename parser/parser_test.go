@@ -3,6 +3,7 @@ package parser
 import (
 	"QV/lexer"
 	ast "QV/syntax_tree"
+	"QV/token"
 	"testing"
 )
 
@@ -11,7 +12,7 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 
 	inputs := []string{
 		`
-		CREATE TABLE test1 ();
+		CREATE TABLE test12 ();
 		`,
 		`
 		CREATE TABLE hello ( cl1 INT );
@@ -27,7 +28,7 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 	tests := []struct {
 		expectedName string
 	}{
-		{"test1"},
+		{"test12"},
 		{"hello"},
 		{"_name_start_with_under_line"},
 	}
@@ -61,6 +62,11 @@ func testTable(t *testing.T, query ast.Query, tableName string) bool {
 	create, ok := query.(*ast.CreateQuery)
 	if !ok {
 		t.Errorf("query is not a CreateQuery. got=%q", query)
+		return false
+	}
+
+	if create.Name.Token.Type != token.NAME {
+		t.Errorf("create name type mismatch. ecpected='%s' got='%s'", token.NAME, create.Name.Token.Type)
 		return false
 	}
 
