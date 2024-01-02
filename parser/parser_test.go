@@ -13,7 +13,7 @@ func checkParseErrors(t *testing.T, parser *Parser) {
 		return
 	}
 
-	t.Errorf("parse error exist, %d", len(errs))
+	t.Errorf("parse error exist, count: %d", len(errs))
 	for _, message := range errs {
 		t.Errorf("parse error: %q", message)
 	}
@@ -75,9 +75,10 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 	for index, input := range inputs {
 		lex := lexer.New(input)
 		pars := New(lex)
+		program := pars.Parse()
+
 		checkParseErrors(t, pars)
 
-		program := pars.Parse()
 		if program == nil {
 			t.Fatalf("inputs[%d] - parsing program failed - returned nil", index)
 		}

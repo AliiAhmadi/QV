@@ -115,6 +115,9 @@ func TestCreatingTableQueries(t *testing.T) {
 			price REAL NOT NULL
 		  );
 		`,
+		`
+		CREATE hello();
+		`,
 	}
 
 	tests := [][]struct {
@@ -205,6 +208,13 @@ func TestCreatingTableQueries(t *testing.T) {
 			{"REAL", token.REAL, "REAL"},
 			{"NOT", token.NOT, "NOT"},
 			{"NULL", token.NULL, "NULL"},
+			{"right pranthesis", token.RPARENTHESIS, ")"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+		{
+			{"CREATE keyword", token.CREATE, "CREATE"},
+			{"table name", token.NAME, "hello"},
+			{"left pranthesis", token.LPARENTHESIS, "("},
 			{"right pranthesis", token.RPARENTHESIS, ")"},
 			{"semicolon", token.SEMICOLON, ";"},
 		},

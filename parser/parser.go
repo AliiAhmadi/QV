@@ -46,15 +46,22 @@ func (parser *Parser) Parse() *ast.Program {
 		if q != nil {
 			program.Query = *val
 		}
+
 		parser.nextToken()
 	}
+
 	return program
 }
 
 func (parser *Parser) parseQuery() ast.Query {
 	switch parser.currentToken.Type {
 	case token.CREATE:
-		return parser.parseCreateQuery()
+		q := parser.parseCreateQuery()
+		if q == nil {
+			return nil
+		} else {
+			return q
+		}
 	default:
 		return nil
 	}
