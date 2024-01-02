@@ -4,17 +4,20 @@ import (
 	"QV/lexer"
 	ast "QV/syntax_tree"
 	"QV/token"
+	"fmt"
 )
 
 type Parser struct {
 	lex          *lexer.Lexer
 	currentToken token.Token
 	peekToken    token.Token
+	errors       []string
 }
 
 func New(lex *lexer.Lexer) *Parser {
 	parser := &Parser{
-		lex: lex,
+		lex:    lex,
+		errors: []string{},
 	}
 
 	parser.nextToken()
@@ -96,6 +99,16 @@ func (parser *Parser) expectPeek(tok token.Type) bool {
 		parser.nextToken()
 		return true
 	} else {
+		parser.peekError(tok)
 		return false
 	}
+}
+
+func (parser *Parser) Errors() []string {
+	return parser.errors
+}
+
+func (parser *Parser) peekError(tok token.Type) {
+	message := fmt.Sprintf("expected next token to be '%s', got '%s'", tok, parser.peekToken.Type)
+	parser.errors = append(parser.errors, message)
 }

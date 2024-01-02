@@ -7,6 +7,19 @@ import (
 	"testing"
 )
 
+func checkParseErrors(t *testing.T, parser *Parser) {
+	errs := parser.Errors()
+	if len(errs) == 0 {
+		return
+	}
+
+	t.Errorf("parse error exist, %d", len(errs))
+	for _, message := range errs {
+		t.Errorf("parse error: %q", message)
+	}
+	t.FailNow()
+}
+
 func TestNameOfTableAndCreateTable(t *testing.T) {
 	t.Parallel()
 
@@ -62,6 +75,7 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 	for index, input := range inputs {
 		lex := lexer.New(input)
 		pars := New(lex)
+		checkParseErrors(t, pars)
 
 		program := pars.Parse()
 		if program == nil {
