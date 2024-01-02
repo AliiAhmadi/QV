@@ -23,6 +23,29 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 			col2 VARCHAR(200)
 		);
 		`,
+		`
+		CREATE TABLE usernames (
+			username TEXT PRIMARY KEY,
+			password TEXT NOT NULL
+		);
+		`,
+		`
+		CREATE TABLE products (
+			productID INTEGER PRIMARY KEY,
+			name TEXT NOT NULL UNIQUE,
+			description TEXT,
+			category TEXT
+		);
+		`,
+		`
+		CREATE TABLE orders_ (
+			orderID INTEGER PRIMARY KEY,
+			customerID INTEGER,
+			productID INTEGER,
+			quantity INTEGER NOT NULL,
+			price REAL NOT NULL
+		);
+		`,
 	}
 
 	tests := []struct {
@@ -31,6 +54,9 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		{"test12"},
 		{"hello"},
 		{"_name_start_with_under_line"},
+		{"usernames"},
+		{"products"},
+		{"orders_"},
 	}
 
 	for index, input := range inputs {
