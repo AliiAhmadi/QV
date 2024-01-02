@@ -107,6 +107,8 @@ func (lexer *Lexer) NextToken() token.Token {
 	switch lexer.ch {
 	case ';':
 		tok = newToken(token.SEMICOLON, lexer.ch)
+	case '*':
+		tok = newToken(token.STAR, lexer.ch)
 	case ',':
 		tok = newToken(token.COMMA, lexer.ch)
 	case '(':

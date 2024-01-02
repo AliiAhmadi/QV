@@ -128,6 +128,19 @@ func TestCreatingTableQueries(t *testing.T) {
 		FROM
 			tracks;
 		`,
+		`
+		SELECT
+		name,
+		milliseconds, 
+		albumid
+		FROM
+		tracks
+		ORDER BY
+		albumid ASC;
+		`,
+		`
+		SELECT * FROM locations;
+		`,
 	}
 
 	tests := [][]struct {
@@ -259,6 +272,40 @@ func TestCreatingTableQueries(t *testing.T) {
 			{"column name", token.NAME, "albumid"},
 			{"FROM", token.FROM, "FROM"},
 			{"table name", token.NAME, "tracks"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT
+		// name,
+		// milliseconds,
+		// albumid
+		// FROM
+		// tracks
+		// ORDER BY
+		// albumid ASC;
+
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "milliseconds"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "albumid"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "tracks"},
+			{"ORDER", token.ORDER, "ORDER"},
+			{"BY", token.BY, "BY"},
+			{"column name", token.NAME, "albumid"},
+			{"ASC", token.ASC, "ASC"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT * FROM locations;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"STAR", token.STAR, "*"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "locations"},
 			{"semicolon", token.SEMICOLON, ";"},
 		},
 	}
