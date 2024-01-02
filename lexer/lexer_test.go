@@ -150,6 +150,12 @@ func TestCreatingTableQueries(t *testing.T) {
 		`
 		SELECT * FROM locations LIMIT 4,5;
 		`,
+		`
+		SELECT * FROM locations LIMIT 5 OFFSET 4;
+		`,
+		`
+		SELECT * FROM locations WHERE country_id='CA';
+		`,
 	}
 
 	tests := [][]struct {
@@ -350,6 +356,32 @@ func TestCreatingTableQueries(t *testing.T) {
 			{"number 4", token.NUMBER, "4"},
 			{"comma", token.COMMA, ","},
 			{"number 5", token.NUMBER, "5"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT * FROM locations LIMIT 5 OFFSET 4;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"STAR", token.STAR, "*"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "locations"},
+			{"LIMIT", token.LIMIT, "LIMIT"},
+			{"number 5", token.NUMBER, "5"},
+			{"OFFSET", token.OFFSET, "OFFSET"},
+			{"number 4", token.NUMBER, "4"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT * FROM locations WHERE country_id='CA';
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"STAR", token.STAR, "*"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "locations"},
+			{"WHERE", token.WHERE, "WHERE"},
+			{"column name", token.NAME, "country_id"},
+			{"equal sign", token.EQUALITY, "="},
+			{"string", token.STRING, "CA"},
 			{"semicolon", token.SEMICOLON, ";"},
 		},
 	}

@@ -68,6 +68,20 @@ func (lexer *Lexer) readByte() string {
 	return lexer.input[position : position+1]
 }
 
+func (lexer *Lexer) readSingleQuoteString() string {
+	position := lexer.position + 1
+
+	for {
+		lexer.readChar()
+
+		if lexer.ch == '\'' || lexer.ch == 0 {
+			break
+		}
+	}
+
+	return lexer.input[position:lexer.position]
+}
+
 func isLetter(ch byte) bool {
 	return ('a' <= ch && ch <= 'z') || ('A' <= ch && 'Z' >= ch) || (ch == '_')
 }
@@ -109,6 +123,8 @@ func (lexer *Lexer) NextToken() token.Token {
 		tok = newToken(token.SEMICOLON, lexer.ch)
 	case '*':
 		tok = newToken(token.STAR, lexer.ch)
+	case '=':
+		tok = newToken(token.EQUALITY, lexer.ch)
 	case ',':
 		tok = newToken(token.COMMA, lexer.ch)
 	case '(':
@@ -118,9 +134,13 @@ func (lexer *Lexer) NextToken() token.Token {
 	case '"':
 		tok.Type = token.STRING
 		tok.Literal = lexer.readString()
+	// case '\'':
+	// 	tok.Type = token.BYTE
+	// 	tok.Literal = lexer.readByte()
+
 	case '\'':
-		tok.Type = token.BYTE
-		tok.Literal = lexer.readByte()
+		tok.Type = token.STRING
+		tok.Literal = lexer.readSingleQuoteString()
 	case 0:
 		tok.Type = token.EOQ
 		tok.Literal = ""
