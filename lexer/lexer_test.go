@@ -118,6 +118,16 @@ func TestCreatingTableQueries(t *testing.T) {
 		`
 		CREATE hello();
 		`,
+		`SELECT select_list FROM table ORDER BY column_1 ASC, column_2 DESC;
+		`,
+		`
+		SELECT
+			name,
+			milliseconds, 
+        	albumid
+		FROM
+			tracks;
+		`,
 	}
 
 	tests := [][]struct {
@@ -216,6 +226,39 @@ func TestCreatingTableQueries(t *testing.T) {
 			{"table name", token.NAME, "hello"},
 			{"left pranthesis", token.LPARENTHESIS, "("},
 			{"right pranthesis", token.RPARENTHESIS, ")"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+		//SELECT select_list FROM table ORDER BY column_1 ASC, column_2 DESC;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "select_list"},
+			{"FROM", token.FROM, "FROM"},
+			{"table", token.NAME, "table"},
+			{"ORDER", token.ORDER, "ORDER"},
+			{"BY", token.BY, "BY"},
+			{"column name", token.NAME, "column_1"},
+			{"ASC", token.ASC, "ASC"},
+			{"comma", token.COMMA, ","},
+			{"column_2", token.NAME, "column_2"},
+			{"DESC keyword", token.DESC, "DESC"},
+			{"semocolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT
+		// 	name,
+		// 	milliseconds,
+		// 	albumid
+		// FROM
+		// 	tracks;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "milliseconds"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "albumid"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "tracks"},
 			{"semicolon", token.SEMICOLON, ";"},
 		},
 	}
