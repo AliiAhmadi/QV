@@ -170,23 +170,23 @@ func TestCreatingTableQueries(t *testing.T) {
 		WHERE department_id=80;
 		`,
 		`
-			SELECT employee_id, first_name, last_name,job_id, manager_id,department_id 
-			FROM employees
-			WHERE department_id=80 
-			AND manager_id=100;
+		SELECT employee_id, first_name, last_name,job_id, manager_id,department_id 
+		FROM employees
+		WHERE department_id=80 
+		AND manager_id=100;
 		`,
 		`
-			SELECT employee_id, first_name, last_name,job_id, manager_id,department_id 
-			FROM employees
-			WHERE job_id='SH_CLERK' 
-			OR department_id=80 
-			AND manager_id=147;
+		SELECT employee_id, first_name, last_name,job_id, manager_id,department_id 
+		FROM employees
+		WHERE job_id='SH_CLERK' 
+		OR department_id=80 
+		AND manager_id=147;
 		`,
 		`
-			SELECT employee_id, first_name, last_name,job_id, manager_id,department_id 
-			FROM employees
-			WHERE job_id='SH_CLERK' 
-			OR (department_id=80 AND manager_id=147);
+		SELECT employee_id, first_name, last_name,job_id, manager_id,department_id 
+		FROM employees
+		WHERE job_id='SH_CLERK' 
+		OR (department_id=80 AND manager_id=147);
 		`,
 		`
 		SELECT DISTINCT department_id, manager_id
