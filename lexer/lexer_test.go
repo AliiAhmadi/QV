@@ -169,6 +169,19 @@ func TestCreatingTableQueries(t *testing.T) {
 		FROM employees
 		WHERE department_id=80;
 		`,
+		`
+			SELECT employee_id, first_name, last_name,job_id, manager_id,department_id 
+			FROM employees
+			WHERE department_id=80 
+			AND manager_id=100;
+		`,
+		`
+			SELECT employee_id, first_name, last_name,job_id, manager_id,department_id 
+			FROM employees
+			WHERE job_id='SH_CLERK' 
+			OR department_id=80 
+			AND manager_id=147;
+		`,
 	}
 
 	tests := [][]struct {
@@ -452,6 +465,71 @@ func TestCreatingTableQueries(t *testing.T) {
 			{"column name", token.NAME, "department_id"},
 			{"EQUALITY", token.EQUALITY, "="},
 			{"NUMBER", token.NUMBER, "80"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT employee_id, first_name, last_name,job_id, manager_id,department_id
+		// FROM employees
+		// WHERE department_id=80
+		// AND manager_id=100;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "employee_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "first_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "last_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "job_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "manager_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "department_id"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "employees"},
+			{"WHERE", token.WHERE, "WHERE"},
+			{"column name", token.NAME, "department_id"},
+			{"EQUALITY", token.EQUALITY, "="},
+			{"NUMBER", token.NUMBER, "80"},
+			{"AND", token.AND, "AND"},
+			{"column name", token.NAME, "manager_id"},
+			{"EQUALITY", token.EQUALITY, "="},
+			{"NUMBER", token.NUMBER, "100"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT employee_id, first_name, last_name,job_id, manager_id,department_id
+		// FROM employees
+		// WHERE job_id='SH_CLERK'
+		// OR department_id=80
+		// AND manager_id=147;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "employee_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "first_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "last_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "job_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "manager_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "department_id"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "employees"},
+			{"WHERE", token.WHERE, "WHERE"},
+			{"column name", token.NAME, "job_id"},
+			{"EQUALITY", token.EQUALITY, "="},
+			{"STR", token.STRING, "SH_CLERK"},
+			{"OR", token.OR, "OR"},
+			{"column name", token.NAME, "department_id"},
+			{"EQUALITY", token.EQUALITY, "="},
+			{"NUMBER", token.NUMBER, "80"},
+			{"AND", token.AND, "AND"},
+			{"column name", token.NAME, "manager_id"},
+			{"EQUALITY", token.EQUALITY, "="},
+			{"NUMBER", token.NUMBER, "147"},
 			{"semicolon", token.SEMICOLON, ";"},
 		},
 	}
