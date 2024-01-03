@@ -156,6 +156,9 @@ func TestCreatingTableQueries(t *testing.T) {
 		`
 		SELECT * FROM locations WHERE country_id='CA';
 		`,
+		`
+		SELECT * FROM agents WHERE commission<15;
+		`,
 	}
 
 	tests := [][]struct {
@@ -382,6 +385,19 @@ func TestCreatingTableQueries(t *testing.T) {
 			{"column name", token.NAME, "country_id"},
 			{"equal sign", token.EQUALITY, "="},
 			{"string", token.STRING, "CA"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT * FROM agents WHERE commission<15;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"STAR", token.STAR, "*"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "agents"},
+			{"WHERE", token.WHERE, "WHERE"},
+			{"column name", token.NAME, "commission"},
+			{"LESSTHAN", token.LESSTHAN, "<"},
+			{"NUMBER", token.NUMBER, "15"},
 			{"semicolon", token.SEMICOLON, ";"},
 		},
 	}

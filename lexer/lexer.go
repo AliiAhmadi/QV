@@ -131,6 +131,10 @@ func (lexer *Lexer) NextToken() token.Token {
 		tok = newToken(token.LPARENTHESIS, lexer.ch)
 	case ')':
 		tok = newToken(token.RPARENTHESIS, lexer.ch)
+	case '<':
+		tok = newToken(token.LESSTHAN, lexer.ch)
+	case '>':
+		tok = newToken(token.GREATERTHAN, lexer.ch)
 	case '"':
 		tok.Type = token.STRING
 		tok.Literal = lexer.readString()

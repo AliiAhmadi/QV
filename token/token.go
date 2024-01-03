@@ -240,6 +240,8 @@ const (
 	STAR                 = "*"
 	EQUALITY             = "="
 	SINGLE_QUOTES_STRING = "'"
+	LESSTHAN             = "<"
+	GREATERTHAN          = ">"
 )
 
 var keywords map[string]Type = map[string]Type{
@@ -421,6 +423,9 @@ var keywords map[string]Type = map[string]Type{
 	"WITH":              WITH,
 	"WITHOUT":           WITHOUT,
 	"*":                 STAR,
+	"<":                 LESSTHAN,
+	">":                 GREATERTHAN,
+	"=":                 EQUALITY,
 }
 
 func Lookup(val string) Type {
