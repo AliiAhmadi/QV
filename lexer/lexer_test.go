@@ -159,6 +159,16 @@ func TestCreatingTableQueries(t *testing.T) {
 		`
 		SELECT * FROM agents WHERE commission<15;
 		`,
+		`
+		SELECT agent_code, agent_name, commission
+		FROM agents 
+		WHERE commission>12000;
+		`,
+		`
+		SELECT employee_id, first_name, last_name,job_id, manager_id,department_id 
+		FROM employees
+		WHERE department_id=80;
+		`,
 	}
 
 	tests := [][]struct {
@@ -398,6 +408,50 @@ func TestCreatingTableQueries(t *testing.T) {
 			{"column name", token.NAME, "commission"},
 			{"LESSTHAN", token.LESSTHAN, "<"},
 			{"NUMBER", token.NUMBER, "15"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT agent_code, agent_name, commission
+		// FROM agents
+		// WHERE commission>12000;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "agent_code"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "agent_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "commission"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "agents"},
+			{"WHERE", token.WHERE, "WHERE"},
+			{"column name", token.NAME, "commission"},
+			{"GREATERTHAN", token.GREATERTHAN, ">"},
+			{"NUMBER", token.NUMBER, "12000"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT employee_id, first_name, last_name,job_id, manager_id,department_id
+		// FROM employees
+		// WHERE department_id=80;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "employee_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "first_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "last_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "job_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "manager_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "department_id"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "employees"},
+			{"WHERE", token.WHERE, "WHERE"},
+			{"column name", token.NAME, "department_id"},
+			{"EQUALITY", token.EQUALITY, "="},
+			{"NUMBER", token.NUMBER, "80"},
 			{"semicolon", token.SEMICOLON, ";"},
 		},
 	}
