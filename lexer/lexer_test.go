@@ -182,6 +182,51 @@ func TestCreatingTableQueries(t *testing.T) {
 			OR department_id=80 
 			AND manager_id=147;
 		`,
+		`
+			SELECT employee_id, first_name, last_name,job_id, manager_id,department_id 
+			FROM employees
+			WHERE job_id='SH_CLERK' 
+			OR (department_id=80 AND manager_id=147);
+		`,
+		`
+		SELECT DISTINCT department_id, manager_id
+		FROM employees;
+		`,
+		`
+		SELECT employee_id, first_name, last_name,job_id, salary,department_id 
+		FROM employees
+		WHERE department_id<50 
+		ORDER BY salary;
+		`,
+
+		// new
+		`
+		SELECT employee_id, first_name, last_name,job_id, salary,department_id 
+		FROM employees
+		WHERE department_id<50 
+		ORDER BY salary DESC;
+		`,
+
+		`
+		SELECT employee_id, first_name, last_name,job_id, salary,department_id 
+		FROM employees
+		WHERE department_id<50 
+		ORDER BY department_id,salary DESC;
+		`,
+
+		`
+		SELECT DISTINCT department_id, manager_id,job_id
+		FROM employees ORDER BY department_id;
+		`,
+
+		`
+		SELECT job_id as Designation ,"Total Salary" 
+		FROM employees
+		WHERE department_id<80
+		GROUP BY job_id
+		HAVING salery>=10000
+		ORDER BY salery;
+		`,
 	}
 
 	tests := [][]struct {
@@ -530,6 +575,84 @@ func TestCreatingTableQueries(t *testing.T) {
 			{"column name", token.NAME, "manager_id"},
 			{"EQUALITY", token.EQUALITY, "="},
 			{"NUMBER", token.NUMBER, "147"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT employee_id, first_name, last_name,job_id, manager_id,department_id
+		// FROM employees
+		// WHERE job_id='SH_CLERK'
+		// OR (department_id=80 AND manager_id=147);
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "employee_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "first_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "last_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "job_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "manager_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "department_id"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "employees"},
+			{"WHERE", token.WHERE, "WHERE"},
+			{"column name", token.NAME, "job_id"},
+			{"EQUALITY", token.EQUALITY, "="},
+			{"STR", token.STRING, "SH_CLERK"},
+			{"OR", token.OR, "OR"},
+			{"left parenthesis", token.LPARENTHESIS, "("},
+			{"column name", token.NAME, "department_id"},
+			{"EQUALITY", token.EQUALITY, "="},
+			{"NUMBER", token.NUMBER, "80"},
+			{"AND", token.AND, "AND"},
+			{"column name", token.NAME, "manager_id"},
+			{"EQUALITY", token.EQUALITY, "="},
+			{"NUMBER", token.NUMBER, "147"},
+			{"right parenthesis", token.RPARENTHESIS, ")"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT DISTINCT department_id, manager_id
+		// FROM employees;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"DISTINCT", token.DISTINCT, "DISTINCT"},
+			{"column name", token.NAME, "department_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "manager_id"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "employees"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT employee_id, first_name, last_name,job_id, salary,department_id
+		// FROM employees
+		// WHERE department_id<50
+		// ORDER BY salary;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "employee_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "first_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "last_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "job_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "salary"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "department_id"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "employees"},
+			{"WHERE", token.WHERE, "WHERE"},
+			{"column name", token.NAME, "department_id"},
+			{"LESSTHAN", token.LESSTHAN, "<"},
+			{"NUMBER", token.NUMBER, "50"},
+			{"ORDER", token.ORDER, "ORDER"},
+			{"BY", token.BY, "BY"},
+			{"column name", token.NAME, "salary"},
 			{"semicolon", token.SEMICOLON, ";"},
 		},
 	}
