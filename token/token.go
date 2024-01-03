@@ -242,6 +242,8 @@ const (
 	SINGLE_QUOTES_STRING = "'"
 	LESSTHAN             = "<"
 	GREATERTHAN          = ">"
+	LESSTHAN_EQUAL       = "<="
+	GREATERTHAN_EQUAL    = ">="
 )
 
 var keywords map[string]Type = map[string]Type{

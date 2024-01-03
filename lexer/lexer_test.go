@@ -199,7 +199,6 @@ func TestCreatingTableQueries(t *testing.T) {
 		ORDER BY salary;
 		`,
 
-		// new
 		`
 		SELECT employee_id, first_name, last_name,job_id, salary,department_id 
 		FROM employees
@@ -220,11 +219,11 @@ func TestCreatingTableQueries(t *testing.T) {
 		`,
 
 		`
-		SELECT job_id as Designation ,"Total Salary" 
+		SELECT job_id AS Designation ,"Total Salary" 
 		FROM employees
 		WHERE department_id<80
 		GROUP BY job_id
-		HAVING salery>=10000
+		HAVING salery>10000
 		ORDER BY salery;
 		`,
 	}
@@ -653,6 +652,118 @@ func TestCreatingTableQueries(t *testing.T) {
 			{"ORDER", token.ORDER, "ORDER"},
 			{"BY", token.BY, "BY"},
 			{"column name", token.NAME, "salary"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT employee_id, first_name, last_name,job_id, salary,department_id
+		// FROM employees
+		// WHERE department_id<50
+		// ORDER BY salary DESC;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "employee_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "first_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "last_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "job_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "salary"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "department_id"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "employees"},
+			{"WHERE", token.WHERE, "WHERE"},
+			{"column name", token.NAME, "department_id"},
+			{"lessthan", token.LESSTHAN, "<"},
+			{"NUMBER", token.NUMBER, "50"},
+			{"ORDER", token.ORDER, "ORDER"},
+			{"BY", token.BY, "BY"},
+			{"column name", token.NAME, "salary"},
+			{"DESC", token.DESC, "DESC"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT employee_id, first_name, last_name,job_id, salary,department_id
+		// FROM employees
+		// WHERE department_id<50
+		// ORDER BY department_id,salary DESC;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "employee_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "first_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "last_name"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "job_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "salary"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "department_id"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "employees"},
+			{"WHERE", token.WHERE, "WHERE"},
+			{"column name", token.NAME, "department_id"},
+			{"lessthan", token.LESSTHAN, "<"},
+			{"NUMBER", token.NUMBER, "50"},
+			{"ORDER", token.ORDER, "ORDER"},
+			{"BY", token.BY, "BY"},
+			{"column name", token.NAME, "department_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "salary"},
+			{"DESC", token.DESC, "DESC"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT DISTINCT department_id, manager_id,job_id
+		// FROM employees ORDER BY department_id;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"DISTINCT", token.DISTINCT, "DISTINCT"},
+			{"column name", token.NAME, "department_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "manager_id"},
+			{"comma", token.COMMA, ","},
+			{"column name", token.NAME, "job_id"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "employees"},
+			{"ORDER", token.ORDER, "ORDER"},
+			{"BY", token.BY, "BY"},
+			{"column name", token.NAME, "department_id"},
+			{"semicolon", token.SEMICOLON, ";"},
+		},
+
+		// SELECT job_id AS Designation ,"Total Salary"
+		// FROM employees
+		// WHERE department_id<80
+		// GROUP BY job_id
+		// HAVING salery>10000
+		// ORDER BY salery;
+		{
+			{"SELECT", token.SELECT, "SELECT"},
+			{"column name", token.NAME, "job_id"},
+			{"AS", token.AS, "AS"},
+			{"column name", token.NAME, "Designation"},
+			{"comma", token.COMMA, ","},
+			{"string", token.STRING, "Total Salary"},
+			{"FROM", token.FROM, "FROM"},
+			{"table name", token.NAME, "employees"},
+			{"WHERE", token.WHERE, "WHERE"},
+			{"column name", token.NAME, "department_id"},
+			{"lessthan", token.LESSTHAN, "<"},
+			{"NUMBER", token.NUMBER, "80"},
+			{"GROUP", token.GROUP, "GROUP"},
+			{"BY", token.BY, "BY"},
+			{"job_id", token.NAME, "job_id"},
+			{"HAVING", token.HAVING, "HAVING"},
+			{"salery", token.NAME, "salery"},
+			{"greater than", token.GREATERTHAN, ">"},
+			{"NUMBER", token.NUMBER, "10000"},
+			{"ORDER", token.ORDER, "ORDER"},
+			{"BY", token.BY, "BY"},
+			{"salery", token.NAME, "salery"},
 			{"semicolon", token.SEMICOLON, ";"},
 		},
 	}
