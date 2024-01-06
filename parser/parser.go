@@ -85,12 +85,27 @@ func (parser *Parser) parseCreateQuery() *ast.CreateQuery {
 		Value: parser.currentToken.Literal,
 	}
 
+	if !parser.expectPeek(token.LPARENTHESIS) {
+		return nil
+	}
+
+	for !parser.expectPeek(token.RPARENTHESIS) {
+		column, err := parser.parseColumn()
+		if err != nil {
+
+		}
+	}
+
 	// skip to end of query for now
 	for !parser.curTokenIs(token.SEMICOLON) {
 		parser.nextToken()
 	}
 
 	return createQuery
+}
+
+func (parser *Parser) parseColumn() (*ast.Column, error) {
+
 }
 
 func (parser *Parser) curTokenIs(tok token.Type) bool {
