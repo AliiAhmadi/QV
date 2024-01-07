@@ -459,6 +459,190 @@ func TestStringifingPrograms(t *testing.T) {
 			},
 			`CREATE TABLE comments( comment_id INT PRIMARY KEY AUTO_INCREMENT, post_id INT NOT NULL, user_id INT NOT NULL, content TEXT NOT NULL, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP )`,
 		},
+
+		{
+			&Program{
+				Query: CreateQuery{
+					Token: token.Token{
+						Type:    token.CREATE,
+						Literal: token.CREATE,
+					},
+					Name: &Identifier{
+						Token: token.Token{
+							Type:    token.NAME,
+							Literal: "books",
+						},
+						Value: "books",
+					},
+					// book_id INT PRIMARY KEY AUTO_INCREMENT
+					Columns: []Column{
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "book_id",
+								},
+								Value: "book_id",
+							},
+							DataType: token.INT,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.PRIMARY,
+										Literal: token.PRIMARY,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.KEY,
+										Literal: token.KEY,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.AUTO_INCREMENT,
+										Literal: token.AUTO_INCREMENT,
+									},
+								},
+							},
+						},
+						// title VARCHAR NOT NULL
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "title",
+								},
+								Value: "title",
+							},
+							DataType: token.VARCHAR,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.NOT,
+										Literal: token.NOT,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.NULL,
+										Literal: token.NULL,
+									},
+								},
+							},
+						},
+						// author VARCHAR NOT NULL
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "author",
+								},
+								Value: "author",
+							},
+							DataType: token.VARCHAR,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.NOT,
+										Literal: token.NOT,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.NULL,
+										Literal: token.NULL,
+									},
+								},
+							},
+						},
+						// genre VARCHAR NOT NULL
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "genre",
+								},
+								Value: "genre",
+							},
+							DataType: token.VARCHAR,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.NOT,
+										Literal: token.NOT,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.NULL,
+										Literal: token.NULL,
+									},
+								},
+							},
+						},
+						// publication_date DATE NOT NULL
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "publication_date",
+								},
+								Value: "publication_date",
+							},
+							DataType: token.DATE,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.NOT,
+										Literal: token.NOT,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.NULL,
+										Literal: token.NULL,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.DEFAULT,
+										Literal: token.DEFAULT,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.CURRENT_TIMESTAMP,
+										Literal: token.CURRENT_TIMESTAMP,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			`CREATE TABLE books( book_id INT PRIMARY KEY AUTO_INCREMENT, title VARCHAR NOT NULL, author VARCHAR NOT NULL, genre VARCHAR NOT NULL, publication_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP )`,
+		},
 	}
 
 	for index, test := range tests {
