@@ -35,7 +35,7 @@ test:
 	@echo "running tests..."
 	@go test -race -vet=off ./...
 
-linker_falg = "-s"
+linker_flag = "-s"
 
 ## build: build the application
 .PHONY: build
