@@ -35,7 +35,7 @@ type Column struct {
 	Token    token.Token
 	Name     *Identifier
 	DataType token.DataType
-	MetaData []token.Token
+	MetaData []token.MetaData
 }
 
 func (program *Program) TokenLiteral() string { return program.Query.TokenLiteral() }
@@ -53,7 +53,7 @@ func (createQuery *CreateQuery) String() string {
 
 	output.WriteString(createQuery.Token.Literal + " " + token.TABLE + " ")
 	output.WriteString(createQuery.Name.String())
-	output.WriteString("(")
+	output.WriteString("( ")
 
 	columns := []string{}
 
@@ -62,7 +62,7 @@ func (createQuery *CreateQuery) String() string {
 	}
 
 	output.WriteString(strings.Join(columns, ", "))
-	output.WriteString(")")
+	output.WriteString(" )")
 
 	return output.String()
 }

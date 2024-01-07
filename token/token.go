@@ -12,6 +12,10 @@ func (dataType *DataType) String() string {
 	return string(*dataType)
 }
 
+func (metadata *MetaData) String() string {
+	return string(*metadata)
+}
+
 func (token *Token) String() string {
 	return token.Literal
 }
