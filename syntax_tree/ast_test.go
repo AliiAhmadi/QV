@@ -193,6 +193,272 @@ func TestStringifingPrograms(t *testing.T) {
 			},
 			`CREATE TABLE products( productID INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE, description TEXT, category TEXT )`,
 		},
+		{
+			&Program{
+				Query: CreateQuery{
+					Token: token.Token{
+						Type:    token.CREATE,
+						Literal: token.CREATE,
+					},
+					Name: &Identifier{
+						Token: token.Token{
+							Type:    token.NAME,
+							Literal: "customers",
+						},
+						Value: "customers",
+					},
+					Columns: []Column{
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "customer_id",
+								},
+								Value: "customer_id",
+							},
+							DataType: token.INT,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.PRIMARY,
+										Literal: token.PRIMARY,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.KEY,
+										Literal: token.KEY,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.AUTO_INCREMENT,
+										Literal: token.AUTO_INCREMENT,
+									},
+								},
+							},
+						},
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "first_name",
+								},
+								Value: "first_name",
+							},
+							DataType: token.VARCHAR,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.NOT,
+										Literal: token.NOT,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.NULL,
+										Literal: token.NULL,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			`CREATE TABLE customers( customer_id INT PRIMARY KEY AUTO_INCREMENT, first_name VARCHAR NOT NULL )`,
+		},
+
+		{
+			&Program{
+				Query: CreateQuery{
+					Token: token.Token{
+						Type:    token.CREATE,
+						Literal: token.CREATE,
+					},
+					Name: &Identifier{
+						Token: token.Token{
+							Type:    token.NAME,
+							Literal: "comments",
+						},
+						Value: "comments",
+					},
+					// comment_id INT PRIMARY KEY AUTO_INCREMENT
+					Columns: []Column{
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "comment_id",
+								},
+								Value: "comment_id",
+							},
+							DataType: token.INT,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.PRIMARY,
+										Literal: token.PRIMARY,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.KEY,
+										Literal: token.KEY,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.AUTO_INCREMENT,
+										Literal: token.AUTO_INCREMENT,
+									},
+								},
+							},
+						},
+						// post_id INT NOT NULL
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "post_id",
+								},
+								Value: "post_id",
+							},
+							DataType: token.INT,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.NOT,
+										Literal: token.NOT,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.NULL,
+										Literal: token.NULL,
+									},
+								},
+							},
+						},
+						// user_id INT NOT NULL
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "user_id",
+								},
+								Value: "user_id",
+							},
+							DataType: token.INT,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.NOT,
+										Literal: token.NOT,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.NULL,
+										Literal: token.NULL,
+									},
+								},
+							},
+						},
+						// content TEXT NOT NULL
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "content",
+								},
+								Value: "content",
+							},
+							DataType: token.TEXT,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.NOT,
+										Literal: token.NOT,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.NULL,
+										Literal: token.NULL,
+									},
+								},
+							},
+						},
+						// created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+						{
+							Token: token.Token{
+								Type:    token.COLUMN,
+								Literal: token.COLUMN,
+							},
+							Name: &Identifier{
+								Token: token.Token{
+									Type:    token.NAME,
+									Literal: "created_at",
+								},
+								Value: "created_at",
+							},
+							DataType: token.DATETIME,
+							MetaData: []token.MetaData{
+								{
+									Token: token.Token{
+										Type:    token.NOT,
+										Literal: token.NOT,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.NULL,
+										Literal: token.NULL,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.DEFAULT,
+										Literal: token.DEFAULT,
+									},
+								},
+								{
+									Token: token.Token{
+										Type:    token.CURRENT_TIMESTAMP,
+										Literal: token.CURRENT_TIMESTAMP,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			`CREATE TABLE comments( comment_id INT PRIMARY KEY AUTO_INCREMENT, post_id INT NOT NULL, user_id INT NOT NULL, content TEXT NOT NULL, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP )`,
+		},
 	}
 
 	for index, test := range tests {

@@ -126,7 +126,7 @@ const (
 	AS                   = "AS"
 	ASC                  = "ASC"
 	ATTACH               = "ATTACH"
-	AUTOINCREMENT        = "AUTOINCREMENT"
+	AUTO_INCREMENT       = "AUTO_INCREMENT"
 	BEFORE               = "BEFORE"
 	BEGIN                = "BEGIN"
 	BETWEEN              = "BETWEEN"
@@ -313,7 +313,7 @@ var keywords map[string]Type = map[string]Type{
 	"AS":                AS,
 	"ASC":               ASC,
 	"ATTACH":            ATTACH,
-	"AUTOINCREMENT":     AUTOINCREMENT,
+	"AUTO_INCREMENT":    AUTO_INCREMENT,
 	"BEFORE":            BEFORE,
 	"BEGIN":             BEGIN,
 	"BETWEEN":           BETWEEN,
