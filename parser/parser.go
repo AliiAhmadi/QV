@@ -76,6 +76,17 @@ func (parser *Parser) parseCreateQuery() *ast.CreateQuery {
 		return nil
 	}
 
+	if parser.peekTokenIs(token.IF) {
+		parser.nextToken()
+		if !parser.expectPeek(token.NOT) {
+			return nil
+		}
+
+		if !parser.expectPeek(token.EXISTS) {
+			return nil
+		}
+	}
+
 	if !parser.expectPeek(token.NAME) {
 		return nil
 	}
@@ -89,12 +100,12 @@ func (parser *Parser) parseCreateQuery() *ast.CreateQuery {
 		return nil
 	}
 
-	for !parser.expectPeek(token.RPARENTHESIS) {
-		column, err := parser.parseColumn()
-		if err != nil {
+	// for !parser.expectPeek(token.RPARENTHESIS) {
+	// 	column, err := parser.parseColumn()
+	// 	if err != nil {
 
-		}
-	}
+	// 	}
+	// }
 
 	// skip to end of query for now
 	for !parser.curTokenIs(token.SEMICOLON) {
@@ -105,7 +116,7 @@ func (parser *Parser) parseCreateQuery() *ast.CreateQuery {
 }
 
 func (parser *Parser) parseColumn() (*ast.Column, error) {
-
+	return nil, nil
 }
 
 func (parser *Parser) curTokenIs(tok token.Type) bool {

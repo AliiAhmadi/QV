@@ -59,6 +59,29 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 			price REAL NOT NULL
 		);
 		`,
+		`
+		CREATE TABLE IF NOT EXISTS test_test_test ();
+		`,
+		`
+		CREATE TABLE Customers (
+			First_Name varchar(50) NOT NULL,
+			Last_Name varchar(50) NOT NULL,
+			City varchar(50) NOT NULL,
+			Email varchar(100) NOT NULL,
+			Phone_Number varchar(20) NOT NULL,
+			Registration_Date date NOT NULL
+			);
+		`,
+
+		`
+		CREATE TABLE Customers (
+			First_Name varchar(50) NOT NULL,
+			Last_Name varchar(50) NOT NULL,
+			Email varchar(100) NOT NULL,
+			Phone_Number varchar(20) NOT NULL,
+			CONSTRAINT PK_Customer PRIMARY KEY (Last_Name, Email, Phone_Number)
+			);
+		`,
 	}
 
 	tests := []struct {
@@ -70,6 +93,9 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		{"usernames"},
 		{"products"},
 		{"orders_"},
+		{"test_test_test"},
+		{"Customers"},
+		{"Customers"},
 	}
 
 	for index, input := range inputs {
