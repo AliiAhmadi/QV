@@ -6,14 +6,16 @@ package token
 type Type string
 
 type DataType string
-type MetaData string
+type MetaData struct {
+	Token Token
+}
 
 func (dataType *DataType) String() string {
 	return string(*dataType)
 }
 
 func (metadata *MetaData) String() string {
-	return string(*metadata)
+	return metadata.Token.String()
 }
 
 func (token *Token) String() string {
