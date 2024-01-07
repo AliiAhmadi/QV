@@ -25,7 +25,7 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 
 	inputs := []string{
 		`
-		CREATE TABLE test12 ();
+		CREATE TABLE test12 ( col VARCHAR );
 		`,
 		`
 		CREATE TABLE hello ( cl1 INT );
@@ -33,7 +33,7 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		`
 		CREATE TABLE _name_start_with_under_line (
 			is_ok BOOLEAN,
-			col2 VARCHAR(200)
+			col2 VARCHAR
 		);
 		`,
 		`
@@ -60,35 +60,34 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		);
 		`,
 		`
-		CREATE TABLE IF NOT EXISTS test_test_test ();
+		CREATE TABLE IF NOT EXISTS test_test_test ( col FLOAT );
 		`,
 		`
 		CREATE TABLE Customers (
-			First_Name varchar(50) NOT NULL,
-			Last_Name varchar(50) NOT NULL,
-			City varchar(50) NOT NULL,
-			Email varchar(100) NOT NULL,
-			Phone_Number varchar(20) NOT NULL,
-			Registration_Date date NOT NULL
+			First_Name VARCHAR NOT NULL,
+			Last_Name VARCHAR NOT NULL,
+			City VARCHAR NOT NULL,
+			Email VARCHAR NOT NULL,
+			Phone_Number VARCHAR NOT NULL,
+			Registration_Date DATE NOT NULL
 			);
 		`,
 
 		`
 		CREATE TABLE Customers (
-			First_Name varchar(50) NOT NULL,
-			Last_Name varchar(50) NOT NULL,
-			Email varchar(100) NOT NULL,
-			Phone_Number varchar(20) NOT NULL,
-			CONSTRAINT PK_Customer PRIMARY KEY (Last_Name, Email, Phone_Number)
+			First_Name VARCHAR NOT NULL,
+			Last_Name VARCHAR NOT NULL,
+			Email VARCHAR NOT NULL,
+			Phone_Number VARCHAR NOT NULL
 			);
 		`,
 
 		`
 		CREATE TABLE books (
 			book_id INT PRIMARY KEY AUTO_INCREMENT,
-			title VARCHAR(255) NOT NULL,
-			author VARCHAR(255) NOT NULL,
-			genre VARCHAR(255) NOT NULL,
+			title VARCHAR NOT NULL,
+			author VARCHAR NOT NULL,
+			genre VARCHAR NOT NULL,
 			publication_date DATE NOT NULL
 			);
 		`,
@@ -96,8 +95,8 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		`
 		CREATE TABLE products (
 			product_id INT PRIMARY KEY AUTO_INCREMENT,
-			name VARCHAR(255) NOT NULL,
-			price DECIMAL(10,2) NOT NULL,
+			name VARCHAR NOT NULL,
+			price DECIMAL NOT NULL,
 			description TEXT,
 			stock_quantity INT NOT NULL
 			);
@@ -106,24 +105,24 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		`
 		CREATE TABLE employees (
 			employee_id INT PRIMARY KEY AUTO_INCREMENT,
-			first_name VARCHAR(255) NOT NULL,
-			last_name VARCHAR(255) NOT NULL,
-			email VARCHAR(255) UNIQUE NOT NULL,
-			phone_number VARCHAR(20) NOT NULL,
-			department VARCHAR(255) NOT NULL
+			first_name VARCHAR NOT NULL,
+			last_name VARCHAR NOT NULL,
+			email VARCHAR UNIQUE NOT NULL,
+			phone_number VARCHAR NOT NULL,
+			department VARCHAR NOT NULL
 			);
 		`,
 
 		`
 		CREATE TABLE customers (
 			customer_id INT PRIMARY KEY AUTO_INCREMENT,
-			first_name VARCHAR(255) NOT NULL,
-			last_name VARCHAR(255) NOT NULL,
-			email VARCHAR(255) UNIQUE NOT NULL,
-			address VARCHAR(255) NOT NULL,
-			city VARCHAR(255) NOT NULL,
-			state VARCHAR(255) NOT NULL,
-			zip_code VARCHAR(255) NOT NULL
+			first_name VARCHAR NOT NULL,
+			last_name VARCHAR NOT NULL,
+			email VARCHAR UNIQUE NOT NULL,
+			address VARCHAR NOT NULL,
+			city VARCHAR NOT NULL,
+			state VARCHAR NOT NULL,
+			zip_code VARCHAR NOT NULL
 			);
 		`,
 
@@ -132,9 +131,9 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 			order_id INT PRIMARY KEY AUTO_INCREMENT,
 			customer_id INT NOT NULL,
 			order_date DATE NOT NULL,
-			total_amount DECIMAL(10,2) NOT NULL,
-			shipping_address VARCHAR(255),
-			billing_address VARCHAR(255)
+			total_amount DECIMAL NOT NULL,
+			shipping_address VARCHAR,
+			billing_address VARCHAR
 			);
 		`,
 
@@ -144,25 +143,25 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 			order_id INT NOT NULL,
 			product_id INT NOT NULL,
 			quantity INT NOT NULL,
-			unit_price DECIMAL(10,2) NOT NULL
+			unit_price DECIMAL NOT NULL
 			);
 		`,
 
 		`
 		CREATE TABLE users (
 			user_id INT PRIMARY KEY AUTO_INCREMENT,
-			username VARCHAR(255) UNIQUE NOT NULL,
-			password VARCHAR(255) NOT NULL,
-			email VARCHAR(255) UNIQUE NOT NULL,
-			first_name VARCHAR(255),
-			last_name VARCHAR(255)
+			username VARCHAR UNIQUE NOT NULL,
+			password VARCHAR NOT NULL,
+			email VARCHAR UNIQUE NOT NULL,
+			first_name VARCHAR,
+			last_name VARCHAR
 			);
 		`,
 
 		`
 		CREATE TABLE posts (
 			post_id INT PRIMARY KEY AUTO_INCREMENT,
-			title VARCHAR(255) NOT NULL,
+			title VARCHAR NOT NULL,
 			content TEXT NOT NULL,
 			author_id INT NOT NULL,
 			created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -183,7 +182,7 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		`
 		CREATE TABLE categories (
 			category_id INT PRIMARY KEY AUTO_INCREMENT,
-			name VARCHAR(255) NOT NULL,
+			name VARCHAR NOT NULL,
 			description TEXT
 			);
 		`,
@@ -199,7 +198,7 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		`
 		CREATE TABLE settings (
 			setting_id INT PRIMARY KEY AUTO_INCREMENT,
-			name VARCHAR(255) NOT NULL,
+			name VARCHAR NOT NULL,
 			value TEXT NOT NULL
 			);
 		`,
@@ -208,7 +207,7 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		CREATE TABLE logs (
 			log_id INT PRIMARY KEY AUTO_INCREMENT,
 			message TEXT NOT NULL,
-			level VARCHAR(20) NOT NULL,
+			level VARCHAR NOT NULL,
 			created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 			);
 		`,
@@ -216,8 +215,8 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		`
 		CREATE TABLE attachments (
 			attachment_id INT PRIMARY KEY AUTO_INCREMENT,
-			name VARCHAR(255) NOT NULL,
-			MIME_type VARCHAR(255) NOT NULL,
+			name VARCHAR NOT NULL,
+			MIME_type VARCHAR NOT NULL,
 			file_size INT NOT NULL,
 			file_content BLOB NOT NULL
 			);
@@ -226,9 +225,9 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		`
 		CREATE TABLE IF NOT EXISTS books (
 			book_id INT PRIMARY KEY AUTO_INCREMENT,
-			title VARCHAR(255) NOT NULL,
-			author VARCHAR(255) NOT NULL,
-			genre VARCHAR(255) NOT NULL,
+			title VARCHAR NOT NULL,
+			author VARCHAR NOT NULL,
+			genre VARCHAR NOT NULL,
 			publication_date DATE NOT NULL
 		  );
 		`,
@@ -238,10 +237,10 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 			product_id INT
 		   
 		  PRIMARY KEY AUTO_INCREMENT,
-			name VARCHAR(255) NOT
+			name VARCHAR NOT
 		   
 		  NULL,
-			price DECIMAL(10,2) NOT
+			price DECIMAL NOT
 		   
 		  NULL,
 			description TEXT,
@@ -256,21 +255,21 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		  PRIMARY
 		   
 		  KEY AUTO_INCREMENT,
-			first_name VARCHAR(255) NOT
+			first_name VARCHAR NOT
 		   
 		  NULL,
-			last_name VARCHAR(255) NOT
+			last_name VARCHAR NOT
 		   
 		  NULL,
-			email VARCHAR(255)
+			email VARCHAR
 		   
 		  UNIQUE
 		   
 		  NOT
 		   
 		  NULL,
-			phone_number VARCHAR(20) NOT NULL,
-			department VARCHAR(255) NOT NULL
+			phone_number VARCHAR NOT NULL,
+			department VARCHAR NOT NULL
 		  );
 		`,
 
@@ -283,25 +282,25 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 		customer_id INT
 		
 		PRIMARY KEY AUTO_INCREMENT,
-		first_name VARCHAR(255) NOT
+		first_name VARCHAR NOT
 		
 		NULL,
-		last_name VARCHAR(255) NOT
+		last_name VARCHAR NOT
 		
 		NULL,
-		email VARCHAR(255) UNIQUE NOT
+		email VARCHAR UNIQUE NOT
 		
 		NULL,
-		address VARCHAR(255) NOT
+		address VARCHAR NOT
 		
 		NULL,
-		city VARCHAR(255) NOT
+		city VARCHAR NOT
 		
 		NULL,
-		state VARCHAR(255) NOT
+		state VARCHAR NOT
 		
 		NULL,
-		zip_code VARCHAR(255) NOT
+		zip_code VARCHAR NOT
 		
 		NULL
 		);
@@ -313,7 +312,7 @@ func TestNameOfTableAndCreateTable(t *testing.T) {
 			order_id INT NOT NULL,
 			product_id INT NOT NULL,
 			quantity INT NOT NULL,
-			unit_price DECIMAL(10,2) NOT NULL
+			unit_price DECIMAL NOT NULL
 		  );		  
 		`,
 	}

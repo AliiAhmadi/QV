@@ -53,6 +53,13 @@ var DataTypes map[string]DataType = map[string]DataType{
 	"DATETIME":  DATETIME,
 }
 
+func LookupDataType(str string) DataType {
+	if dataType, ok := DataTypes[str]; ok {
+		return dataType
+	}
+	return ""
+}
+
 // Define token struct with two value.
 // type & literal
 type Token struct {

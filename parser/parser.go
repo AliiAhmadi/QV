@@ -100,23 +100,63 @@ func (parser *Parser) parseCreateQuery() *ast.CreateQuery {
 		return nil
 	}
 
-	// for !parser.expectPeek(token.RPARENTHESIS) {
-	// 	column, err := parser.parseColumn()
-	// 	if err != nil {
+	for !parser.curTokenIs(token.RPARENTHESIS) {
+		_, ok := parser.parseColumn()
+		if !ok {
+			return nil
+		}
+	}
 
-	// 	}
-	// }
+	if !parser.expectPeek(token.SEMICOLON) {
+		return nil
+	}
 
 	// skip to end of query for now
-	for !parser.curTokenIs(token.SEMICOLON) {
-		parser.nextToken()
-	}
+	// for !parser.curTokenIs(token.SEMICOLON) {
+	// 	parser.nextToken()
+	// }
 
 	return createQuery
 }
 
-func (parser *Parser) parseColumn() (*ast.Column, error) {
-	return nil, nil
+func (parser *Parser) parseColumn() (*ast.Column, bool) {
+	column := &ast.Column{
+		Token: token.Token{
+			Type:    token.COLUMN,
+			Literal: token.COLUMN,
+		},
+		MetaData: []token.MetaData{},
+	}
+
+	if !parser.expectPeek(token.NAME) {
+		return nil, false
+	}
+
+	column.Name = &ast.Identifier{
+		Token: parser.currentToken,
+		Value: parser.currentToken.Literal,
+	}
+
+	// parser.nextToken()
+
+	if token.LookupDataType(parser.peekToken.Literal) == "" {
+		fmt.Println(parser.peekToken.Literal)
+		parser.errors = append(parser.errors, "expected DataType got invalid token")
+		return nil, false
+	}
+
+	parser.nextToken()
+
+	column.DataType = token.DataType(parser.currentToken.Literal)
+
+	for !parser.curTokenIs(token.COMMA) && !parser.curTokenIs(token.RPARENTHESIS) {
+		parser.nextToken()
+		column.MetaData = append(column.MetaData, token.MetaData{
+			Token: parser.currentToken,
+		})
+	}
+
+	return column, true
 }
 
 func (parser *Parser) curTokenIs(tok token.Type) bool {
