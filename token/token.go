@@ -8,6 +8,14 @@ type Type string
 type DataType string
 type MetaData string
 
+func (dataType *DataType) String() string {
+	return string(*dataType)
+}
+
+func (token *Token) String() string {
+	return token.Literal
+}
+
 var DataTypes map[string]DataType = map[string]DataType{
 	"INT":       INT,
 	"INTEGER":   INTEGER,
