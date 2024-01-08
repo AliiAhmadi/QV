@@ -27,7 +27,7 @@ func executeQV(query *Query) (string, error) {
 	// fmt.Println(`-q="` + query.Query + `"`)
 	cmd := exec.Command("./../../bin/linux_amd64/QV", `-q="`+query.Query+`"`)
 
-	output, err := cmd.Output()
+	output, err := cmd.CombinedOutput()
 	if err != nil {
 		return string(output), err
 	}
@@ -57,15 +57,15 @@ func checkQueryHandler(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	if str[:6] == "ERROR" {
-		writeJSONResponse(writer, http.StatusBadRequest, ErrorResponse{
-			Message: str[6:],
-			Status:  http.StatusBadRequest,
+	if str == "OK" {
+		writeJSONResponse(writer, http.StatusOK, SuccessResponse{
+			Message: "correct",
+			Status:  http.StatusOK,
 		})
 	} else {
-		writeJSONResponse(writer, http.StatusOK, SuccessResponse{
+		writeJSONResponse(writer, http.StatusBadRequest, ErrorResponse{
 			Message: str,
-			Status:  http.StatusOK,
+			Status:  http.StatusBadRequest,
 		})
 	}
 }
@@ -87,7 +87,7 @@ func main() {
 	// Set up the route for /check/ with POST method
 	mux.Post("/check", http.HandlerFunc(checkQueryHandler))
 
-	mux.NotFound = http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+	mux.NotFound = http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
 		writeJSONResponse(writer, http.StatusNotFound, ErrorResponse{
 			Message: "route not found",
 			Status:  http.StatusNotFound,
