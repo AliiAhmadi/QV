@@ -23,9 +23,8 @@ func showParserErrors(parser *parser.Parser) {
 	if len(errs) == 0 {
 		return
 	}
-	fmt.Printf("%s:", ERROR)
 	errorJsons, _ := json.Marshal(errs)
-	fmt.Println(string(errorJsons))
+	fmt.Print(string(errorJsons))
 	os.Exit(-1)
 }
 
@@ -42,9 +41,11 @@ func main() {
 	showParserErrors(pars)
 
 	if program == nil {
-		fmt.Println(fmt.Sprintf("%s:%s", ERROR, "error in parsing program"))
+		str, _ := json.Marshal("error in parsing program")
+		fmt.Print(string(str))
 		os.Exit(-1)
 	} else {
-		fmt.Println(fmt.Sprintf("%s:%s", OK, program.String()))
+		str, _ := json.Marshal("OK")
+		fmt.Print(string(str))
 	}
 }
