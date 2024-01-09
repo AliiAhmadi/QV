@@ -1,21 +1,31 @@
 package main
 
 import (
+	"QV/lexer"
+	"QV/parser"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os/exec"
 
 	"github.com/bmizerany/pat"
+)
+
+var (
+	OK = true
 )
 
 type Query struct {
 	Query string `json:"query"`
 }
 
+type Jsonify interface {
+	json()
+}
+
 type ErrorResponse struct {
-	Message string `json:"message"`
-	Status  int    `json:"status"`
+	Message string   `json:"message"`
+	Status  int      `json:"status"`
+	Errors  []string `json:"errors"`
 }
 
 type SuccessResponse struct {
@@ -23,16 +33,37 @@ type SuccessResponse struct {
 	Status  int    `json:"status"`
 }
 
-func executeQV(query *Query) (string, error) {
-	// fmt.Println(`-q="` + query.Query + `"`)
-	cmd := exec.Command("./../../bin/linux_amd64/QV", `-q="`+query.Query+`"`)
+func (errorResponse ErrorResponse) json() {}
 
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		return string(output), err
+func (sucessResponse SuccessResponse) json() {}
+
+func executeQV(query *Query) Jsonify {
+	lex := lexer.New(query.Query)
+	pars := parser.New(lex)
+	program := pars.Parse()
+
+	if program == nil {
+		OK = false
+		return ErrorResponse{
+			Message: "can not parse this query",
+			Status:  http.StatusBadRequest,
+			Errors:  pars.Errors(),
+		}
 	}
 
-	return string(output), nil
+	if len(pars.Errors()) != 0 {
+		OK = false
+		return ErrorResponse{
+			Message: "invalid query",
+			Status:  http.StatusBadRequest,
+			Errors:  pars.Errors(),
+		}
+	}
+	OK = true
+	return SuccessResponse{
+		Message: "valid query",
+		Status:  http.StatusOK,
+	}
 }
 
 func checkQueryHandler(writer http.ResponseWriter, request *http.Request) {
@@ -48,26 +79,13 @@ func checkQueryHandler(writer http.ResponseWriter, request *http.Request) {
 
 	fmt.Println(query.Query)
 
-	str, err := executeQV(&query)
-	if err != nil {
-		writeJSONResponse(writer, http.StatusBadRequest, ErrorResponse{
-			Message: str,
-			Status:  http.StatusBadRequest,
-		})
+	parserResponse := executeQV(&query)
+	if !OK {
+		writeJSONResponse(writer, http.StatusBadRequest, parserResponse)
 		return
 	}
 
-	if str == "OK" {
-		writeJSONResponse(writer, http.StatusOK, SuccessResponse{
-			Message: "correct",
-			Status:  http.StatusOK,
-		})
-	} else {
-		writeJSONResponse(writer, http.StatusBadRequest, ErrorResponse{
-			Message: str,
-			Status:  http.StatusBadRequest,
-		})
-	}
+	writeJSONResponse(writer, http.StatusOK, parserResponse)
 }
 
 func writeJSONResponse(writer http.ResponseWriter, statusCode int, data interface{}) {
