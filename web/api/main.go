@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/bmizerany/pat"
+	"github.com/rs/cors"
 )
 
 var (
@@ -112,6 +113,9 @@ func main() {
 		})
 	})
 
-	// Start the server
-	http.ListenAndServe(":8080", mux)
+	// Use the cors.Default() method to create a new CORS handler
+	corsHandler := cors.Default().Handler(mux)
+
+	// Start the server with the CORS handler
+	http.ListenAndServe(":8080", corsHandler)
 }
